@@ -2,12 +2,17 @@
 
 **Univeral Command Options Configuration (for Ruby Executables)**
 
+[Website](http://rubyworks.github.com/dotopts) /
+[Report Issue](http://github.com/rubyworks/dotopts/issues) /
+[Source Code](http://github.com/rubyworks/dotopts)
+( [![Build Status](https://secure.travis-ci.org/rubyworks/dotopts.png)](http://travis-ci.org/rubyworks/dotopts) )
+
 DotOpts is an automatic command line argument augmentor.
 
 
 ## Usage
 
-## Setting Arguments
+### Setting Arguments
 
 A simple example of a projects `.opts` file:
 
@@ -68,4 +73,13 @@ to the square brackets separated by a space.
     -r jruby-sandbox
     -r simplecov
 ```
+
+
+## Copyrights & Licensing
+
+DotOpts is copyrighted open-source software.
+
+*Copyright (c) 2013 Rubyworks. All rights reserved.*
+
+It can be modified and redistributed in accordance with the [BSD-2-Clause](http://spdex.org/licenses/bsd-2-clause) license.
 
