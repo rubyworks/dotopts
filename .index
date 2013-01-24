@@ -1,0 +1,51 @@
+---
+revision: 2013
+type: ruby
+sources:
+- var
+authors:
+- name: trans
+  email: transfire@gmail.com
+organizations:
+- name: Rubyworks
+requirements:
+- groups:
+  - test
+  development: true
+  name: spectroscope
+- groups:
+  - test
+  development: true
+  name: ae
+conflicts: []
+alternatives: []
+resources:
+- type: home
+  uri: http://rubyworks.github.com/dotruby
+  label: Homepage
+- type: code
+  uri: http://github.com/rubyworks/dotruby
+  label: Source Code
+- type: mail
+  uri: http://groups.google.com/group/rubyworks-mailinglist
+  label: Mailing List
+repositories:
+- name: upstream
+  scm: git
+  uri: git@github.com:rubyworks/dotruby.git
+categories: []
+copyrights:
+- holder: Rubyworks
+  year: '2013'
+  license: BSD-2-Clause
+customs: []
+paths:
+  lib:
+  - lib
+created: '2013-01-23'
+summary: Transparent Runtime Configuration for Ruby
+title: Avex
+version: 0.1.0
+name: avex
+description: DotRuby is a universal runtime configuration system for Ruby tools.
+date: '2013-01-23'

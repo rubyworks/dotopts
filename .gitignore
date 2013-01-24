@@ -1,0 +1,9 @@
+.reap/digest
+.yardoc
+doc
+log
+pkg
+tmp
+web
+QED.rdoc
+Gemfile.lock
