@@ -9,8 +9,19 @@
 [Report Issue](http://github.com/rubyworks/dotopts/issues) /
 [Source Code](http://github.com/rubyworks/dotopts)
 
+## About
 
-DotOpts is an automatic command line argument augmentor.
+DotOpts is an automatic command line argument augmentor. I looks for a local
+local `.opts` configuration file and applies the appropriate arguments
+when a matching command is invoked.
+
+
+## Features
+
+* Works with any all Ruby-based executables.
+* Supports conditional augmentation using environment settings.
+* Can set environment variables in addition to arguments.
+* Supports environment variable substitutions.
 
 
 ## Usage
@@ -76,6 +87,20 @@ to the square brackets separated by a space.
     -r jruby-sandbox
     -r simplecov
 ```
+
+## Development
+
+## Universal Solution?
+
+It would be awesome if it were possible to have DotOpts apply to *all* executables,
+not just Ruby-based executables. But I do not know of such a solution for Bash, Zsh
+or any other shell. Of course, each scripting language could potentially have
+its own implememtnation of DotOpts, which would cover many more executables, but it
+would still not cover all of them.
+
+If you are a shell genius and have an epihany on how it might be done, please 
+drop me a note via [Issues](http://github.com/rubyworks/dotopts/issues). I'd be more
+than happy to code and maintain it.
 
 
 ## Copyrights & Licensing
