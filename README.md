@@ -1,3 +1,6 @@
+[![Build Status](https://secure.travis-ci.org/rubyworks/dotopts.png)](http://travis-ci.org/rubyworks/dotopts)
+
+
 # DotOpts (for Ruby)
 
 **Univeral Command Options Configuration (for Ruby Executables)**
@@ -5,7 +8,7 @@
 [Website](http://rubyworks.github.com/dotopts) /
 [Report Issue](http://github.com/rubyworks/dotopts/issues) /
 [Source Code](http://github.com/rubyworks/dotopts)
-( [![Build Status](https://secure.travis-ci.org/rubyworks/dotopts.png)](http://travis-ci.org/rubyworks/dotopts) )
+
 
 DotOpts is an automatic command line argument augmentor.
 
