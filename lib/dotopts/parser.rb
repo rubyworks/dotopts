@@ -1,6 +1,7 @@
 module DotOpts
 
   class Parser
+    require 'shellwords'
 
     #
     RE_PROFILE_HEADER = /^\[/
@@ -60,29 +61,46 @@ module DotOpts
             end
           end
         end
+        #lines.shift
       end
     end
 
+    #
     def parse_commands(lines)
       lines.shift while RE_PROFILE_HEADER =~ lines.first
-      while line = lines.shift
+      while line = lines.first
         line = line.strip
         if md = RE_COMMAND_HEADER.match(line)
           if current_command == line
             parse_arguments(lines)
           end
         elsif RE_PROFILE_HEADER.match(line)
-          return lines.unshift(line)
+          return lines
         end
+        lines.shift
       end
     end
 
     #
     def parse_arguments(lines)
       lines.shift while RE_COMMAND_HEADER =~ lines.first
-      while line = lines.shift
+      parse_environment(lines)
+      while line = lines.first
+        break if RE_PROFILE_HEADER =~ line
+        break if RE_COMMAND_HEADER =~ line
         line = line.strip
-        @arguments << line unless line.empty?
+        @arguments << subenv(line) unless line.empty?
+        lines.shift
+      end
+    end
+
+    #
+    def parse_environment(lines)
+      while line = lines.first
+        break unless line.strip.start_with?('$ ')
+        name, value = line.strip.sub(/\$\s+/, '').split('=')  # TODO: handle quotes
+        @environment[name] = subenv(value) unless name.empty?
+        lines.shift
       end
     end
 
@@ -91,6 +109,13 @@ module DotOpts
     #
     def current_command
       ENV['cmd'] || File.basename($0)
+    end
+
+    # Substitute environment variables.
+    #
+    # @return [String]
+    def subenv(value)
+      value.gsub(/\$(\w+)/){ |m| ENV[$1] }
     end
 
   end
