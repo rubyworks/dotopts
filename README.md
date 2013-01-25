@@ -1,27 +1,31 @@
 [![Build Status](https://secure.travis-ci.org/rubyworks/dotopts.png)](http://travis-ci.org/rubyworks/dotopts)
+[![Gem Version](https://badge.fury.io/rb/dotopts.png)](http://badge.fury.io/rb/dotopts)
 
+<br/>
 
-# DotOpts (for Ruby)
+# DotOpts
 
-**Univeral Command Options Configuration (for Ruby Executables)**
+**Universal Command Options Configuration (for Ruby Executables)**
 
 [Website](http://rubyworks.github.com/dotopts) /
 [Report Issue](http://github.com/rubyworks/dotopts/issues) /
 [Source Code](http://github.com/rubyworks/dotopts)
 
+
 ## About
 
-DotOpts is an automatic command line argument augmentor. I looks for a local
+DotOpts is an automatic command line argument augmenter. I looks for a local
 local `.opts` configuration file and applies the appropriate arguments
 when a matching command is invoked.
 
 
 ## Features
 
-* Works with any all Ruby-based executables.
+* Works with any and all Ruby-based executables.
+* Can be used to set environment variables in addition to arguments.
+* Supports environment variable substitution.
 * Supports conditional augmentation using environment settings.
-* Can set environment variables in addition to arguments.
-* Supports environment variable substitutions.
+* Simple and easy to use plain-text configuration format.
 
 
 ## Usage
@@ -59,17 +63,15 @@ The `.opts` configuration file support profiles via the square brackets.
 Profiles are chosen via the `$profile` or `$p` environment variable.
 
 ```
-  [cov]
   [coverage]
   rubytest
     -r simplecov
 ```
 
 So the above means that `-r simplecov` should be added the argument list when
-`rubytest` is executed, but only if `$profile` or `$p` is equal to `"cov"` or
-`"coverage"`.
+`rubytest` is executed, but only if `$profile` or `$p` is equal to `"coverage"`.
 
-Square brackets can alse be used to match against any environment variable
+Square brackets can also be used to match against any environment variable
 by using the `=` sign.
 
 ```
@@ -82,23 +84,35 @@ To condition a configuration on multiple environment settings, add each
 to the square brackets separated by a space. 
 
 ```
-  [cov RUBY_ENGINE=jruby]
+  [coverage RUBY_ENGINE=jruby]
   rubytest
     -r jruby-sandbox
     -r simplecov
 ```
 
+Finally, environment values can be matched against simple regular expressions
+using a tilde (`~`) before the value. Be sure to out the value in quotes when
+using regular expressions.
+
+```
+  [~"cov(erage)?" RUBY_ENGINE=~"jruby|rubinius"]
+  rubytest
+    -r jruby-sandbox
+    -r simplecov
+```
+
+
 ## Development
 
-## Universal Solution?
+### Universal Solution?
 
 It would be awesome if it were possible to have DotOpts apply to *all* executables,
 not just Ruby-based executables. But I do not know of such a solution for Bash, Zsh
 or any other shell. Of course, each scripting language could potentially have
-its own implememtnation of DotOpts, which would cover many more executables, but it
+its own implementation of DotOpts, which would cover many more executables, but it
 would still not cover all of them.
 
-If you are a shell genius and have an epihany on how it might be done, please 
+If you are a shell genius and have an epiphany on how it might be done, please 
 drop me a note via [Issues](http://github.com/rubyworks/dotopts/issues). I'd be more
 than happy to code and maintain it.
 
