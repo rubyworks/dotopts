@@ -6,7 +6,7 @@ describe DotOpts::Parser do
     ENV['cmd'] = 'yard'  # FIXME: try `foo` and watch what happens
   end
 
-  context "without profiles" do
+  describe "without profiles" do
 
     it "can parse configuration" do
       text = "yard\n" +
@@ -28,14 +28,14 @@ describe DotOpts::Parser do
 
   end
 
-  context "with profiles" do
+  describe "with profiles" do
 
     it "can parse configuration with initial profile" do
       text = "[example]\n" +
              "yard\n" +
              "  --title Super"
 
-      parser = with_environment('profile'=>'example') do
+      parser = with_env('profile'=>'example') do
         DotOpts::Parser.parse(text)
       end
 
@@ -51,7 +51,7 @@ describe DotOpts::Parser do
              "yard\n" +
              "  --title Super"
 
-      parser = with_environment('profile'=>'example') do
+      parser = with_env('profile'=>'example') do
         DotOpts::Parser.parse(text)
       end
 
@@ -59,7 +59,6 @@ describe DotOpts::Parser do
     end
 
   end
-
 
   after do
     ENV['cmd'] = nil
