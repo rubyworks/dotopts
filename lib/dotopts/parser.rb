@@ -67,7 +67,7 @@ module DotOpts
             when /=/
               name, value = shellword.split('=')
               #name = 'profile' if name.empty?
-              true if value == ENV[name]
+              true if subenv(value) == ENV[name]
             else
               true if shellword == (ENV['profile'] || ENV['p']).to_s
             end
