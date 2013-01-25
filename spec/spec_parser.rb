@@ -6,23 +6,60 @@ describe DotOpts::Parser do
     ENV['cmd'] = 'yard'  # FIXME: try `foo` and watch what happens
   end
 
-  it "can parse configuration without profiles" do
-    text = "yard\n" +
-           "  --title Super"
-    parser = DotOpts::Parser.parse(text)
+  context "without profiles" do
 
-    parser.arguments.assert == ['--title Super']
+    it "can parse configuration" do
+      text = "yard\n" +
+             "  --title Super"
+      parser = DotOpts::Parser.parse(text)
+
+      parser.arguments.assert == ['--title', 'Super']
+    end
+
+    it "can parse configuration with multiple arguments" do
+      text = "yard\n" +
+             "  --title Super\n" +
+             "  --private\n"
+
+      parser = DotOpts::Parser.parse(text)
+
+      parser.arguments.assert == ['--title', 'Super', '--private']
+    end
+
   end
 
-  it "can parse configuration with multiple arguments" do
-    text = "yard\n" +
-           "  --title Super\n" +
-           "  --private\n"
+  context "with profiles" do
 
-    parser = DotOpts::Parser.parse(text)
+    it "can parse configuration with initial profile" do
+      text = "[example]\n" +
+             "yard\n" +
+             "  --title Super"
 
-    parser.arguments.assert == ['--title Super', '--private']
+      parser = with_environment('profile'=>'example') do
+        DotOpts::Parser.parse(text)
+      end
+
+      parser.arguments.assert == ['--title', 'Super']
+    end
+
+    it "can parse configuration with lower profile" do
+      text = "[something]\n" +
+             "yard\n" +
+             "  --title Sucky\n" +
+             "\n" +
+             "[example]\n" +
+             "yard\n" +
+             "  --title Super"
+
+      parser = with_environment('profile'=>'example') do
+        DotOpts::Parser.parse(text)
+      end
+
+      parser.arguments.assert == ['--title', 'Super']
+    end
+
   end
+
 
   after do
     ENV['cmd'] = nil

@@ -12,6 +12,10 @@ requirements:
 - groups:
   - test
   development: true
+  name: qed
+- groups:
+  - test
+  development: true
   name: spectroscope
 - groups:
   - test
@@ -48,4 +52,4 @@ title: Avex
 version: 0.1.0
 name: avex
 description: DotRuby is a universal runtime configuration system for Ruby tools.
-date: '2013-01-23'
+date: '2013-01-24'
