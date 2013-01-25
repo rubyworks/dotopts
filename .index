@@ -25,10 +25,10 @@ conflicts: []
 alternatives: []
 resources:
 - type: home
-  uri: http://rubyworks.github.com/dotruby
+  uri: http://rubyworks.github.com/dotopts
   label: Homepage
 - type: code
-  uri: http://github.com/rubyworks/dotruby
+  uri: http://github.com/rubyworks/dotopts
   label: Source Code
 - type: mail
   uri: http://groups.google.com/group/rubyworks-mailinglist
@@ -36,7 +36,7 @@ resources:
 repositories:
 - name: upstream
   scm: git
-  uri: git@github.com:rubyworks/dotruby.git
+  uri: git@github.com:rubyworks/dotopts.git
 categories: []
 copyrights:
 - holder: Rubyworks
@@ -47,9 +47,9 @@ paths:
   lib:
   - lib
 created: '2013-01-23'
-summary: Transparent Runtime Configuration for Ruby
-title: Avex
+summary: Automatic Arguments for Ruby
+title: DotOpts
 version: 0.1.0
-name: avex
-description: DotRuby is a universal runtime configuration system for Ruby tools.
-date: '2013-01-24'
+name: dotopts
+description: DotOpts is an automatic commandline argument augmenter for Ruby tools.
+date: '2013-01-25'
