@@ -9,6 +9,8 @@ module DotOpts
     #
     RE_COMMAND_HEADER = /^\w/
 
+    #
+    RE_BLANK_STRING = /^\s*$/
 
     #
     def self.parse(text)
@@ -32,6 +34,10 @@ module DotOpts
     #
     def parse
       lines = @text.lines.to_a
+
+      remove_initial_blank_lines(lines)
+
+      # put initial non-profiled settings last 
       if lines.first !~ RE_PROFILE_HEADER
         index = lines.index{ |line| line =~ RE_PROFILE_HEADER }
         if index
@@ -40,56 +46,58 @@ module DotOpts
           lines = ['[]'] + lines
         end
       end
+
       parse_profiles(lines)
     end
 
     #
     def parse_profiles(lines)
-      while line = lines.shift
-        line = line.strip
+      until lines.empty?
+        line = lines.first.rstrip
         if md = RE_PROFILE_HEADER.match(line)
           profile = md.post_match.chomp(']')
-          case profile
-          when /=/
-            name, value = profile.split('=')
-            if ENV[name] == value
-              parse_commands(lines)
-            end
-          else
-            if profile == (ENV['profile'] || ENV['p']).to_s
-              parse_commands(lines)
+          matches = shellwords(profile).all? do |shellword|
+            case shellword
+            when /^\~/
+              true if Regexp.new(shellword.sub('~','')) === (ENV['profile'] || ENV['p']).to_s
+            when /=~/
+              name, value = shellword.split('=~')
+              #name = 'profile' if name.empty?
+              true if Regexp.new(value) === ENV[name]
+            when /=/
+              name, value = shellword.split('=')
+              #name = 'profile' if name.empty?
+              true if value == ENV[name]
+            else
+              true if shellword == (ENV['profile'] || ENV['p']).to_s
             end
           end
-        end
-        #lines.shift
-      end
-    end
 
-    #
-    def parse_commands(lines)
-      lines.shift while RE_PROFILE_HEADER =~ lines.first
-      while line = lines.first
-        line = line.strip
-        if md = RE_COMMAND_HEADER.match(line)
-          if current_command == line
-            parse_arguments(lines)
+          if matches
+            lines.shift while RE_PROFILE_HEADER =~ lines.first
+            lines.shift while RE_BLANK_STRING   =~ lines.first
+            parse_commands(lines)
           end
-        elsif RE_PROFILE_HEADER.match(line)
-          return lines
         end
         lines.shift
       end
     end
 
     #
-    def parse_arguments(lines)
-      lines.shift while RE_COMMAND_HEADER =~ lines.first
-      parse_environment(lines)
+    def parse_commands(lines)
       while line = lines.first
-        break if RE_PROFILE_HEADER =~ line
-        break if RE_COMMAND_HEADER =~ line
         line = line.strip
-        @arguments << subenv(line) unless line.empty?
+        if md = RE_COMMAND_HEADER.match(line)
+          if current_command == line
+            lines.shift while RE_COMMAND_HEADER =~ lines.first
+            lines.shift while RE_BLANK_STRING =~ lines.first
+            parse_environment(lines)
+            parse_arguments(lines)
+            next
+          end
+        elsif RE_PROFILE_HEADER.match(line)
+          return
+        end
         lines.shift
       end
     end
@@ -97,9 +105,27 @@ module DotOpts
     #
     def parse_environment(lines)
       while line = lines.first
-        break unless line.strip.start_with?('$ ')
-        name, value = line.strip.sub(/\$\s+/, '').split('=')  # TODO: handle quotes
-        @environment[name] = subenv(value) unless name.empty?
+        line = line.strip
+        next if line.empty?
+        break unless line.start_with?('$ ')
+        line = line.sub(/\$\s+/, '')
+        shellwords(line).each do |s|
+          name, value = s.split('=')
+          @environment[name] = subenv(value) unless name.empty?
+        end
+        lines.shift
+      end
+    end
+
+    #
+    def parse_arguments(lines)
+      while line = lines.first
+        line = line.rstrip
+        break if RE_PROFILE_HEADER =~ line
+        break if RE_COMMAND_HEADER =~ line
+        shellwords(line).each do |s|
+          @arguments << subenv(s) unless s.empty?
+        end
         lines.shift
       end
     end
@@ -116,6 +142,16 @@ module DotOpts
     # @return [String]
     def subenv(value)
       value.gsub(/\$(\w+)/){ |m| ENV[$1] }
+    end
+
+    #
+    def shellwords(value)
+      Shellwords.shellwords(value)
+    end
+
+    #
+    def remove_initial_blank_lines(lines)
+      lines.shift while RE_BLANK_STRING =~ lines.first
     end
 
   end
