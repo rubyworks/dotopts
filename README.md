@@ -28,6 +28,21 @@ when a matching command is invoked.
 * Simple and easy to use plain-text configuration format.
 
 
+## Install
+
+DotOpts can be install via Rubygems:
+
+    gem install dotopts
+
+If you would like to use DotOpts with all Ruby tools, regardless of
+wether they have built-in support for DotOpts, then add `-rdotopts`
+to you `RUBYOPT` environment variable.
+
+    export RUBYOPT="-rdotopts"
+
+This ensures DotOpts is required whenever Ruby is used.
+
+
 ## Usage
 
 ### Setting Arguments
@@ -100,6 +115,13 @@ using regular expressions.
     -r jruby-sandbox
     -r simplecov
 ```
+
+## Third Party Support
+
+Ruby tool developers can support dotopts out-of-the-box simple by running
+`require 'dotopt'` in their program before parsing the commandline. DotOpts
+simply inject arguments into `ARGV` so it can work with any commandline
+option parser.
 
 
 ## Development
