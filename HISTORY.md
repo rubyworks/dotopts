@@ -1,6 +1,6 @@
 # RELEASE HISTORY
 
-## 0.1.0 / 2013-01-25
+## 0.1.0 / 2013-01-28
 
 First release of DotOpts.
 
