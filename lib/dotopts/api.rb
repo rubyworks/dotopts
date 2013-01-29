@@ -2,7 +2,7 @@ module DotOpts
   require 'dotopts/parser'
 
   #
-  OPTIONS_FILE = '.options'
+  OPTIONS_FILE = '.opts'
 
   # Configure
   #
