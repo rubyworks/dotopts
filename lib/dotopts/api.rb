@@ -2,28 +2,29 @@ module DotOpts
   require 'dotopts/parser'
 
   #
-  CONFIG_FILE = '.options'
+  OPTIONS_FILE = '.options'
 
   # Configure
   #
-  # @param [String] configuraiton file
+  # @param [String] file
+  #   The configuration file to load. (optional)
   #
   # @return nothing
   def self.configure!(file=nil)
-    file = config_file unless file
+    file = options_file unless file
     if file
-      text = File.read(config_file)
+      text = File.read(file)
       parser = Parser.parse(text)
       ARGV.concat parser.arguments
-    end   
+    end
   end
 
-  # Returns the `.ruby` file of the current project.
+  # Returns the options file of the current project.
   #
-  # @return {String] The .ruby file of the project.
-  def self.config_file
+  # @return {String] The options file of the project.
+  def self.options_file
     if project_root
-      file = File.join(project_root, CONFIG_FILE)
+      file = File.join(project_root, OPTIONS_FILE)
       return file if File.exist?(file)
     end
   end
