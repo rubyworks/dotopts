@@ -116,7 +116,7 @@ using regular expressions.
     -r simplecov
 ```
 
-## Third Party Support
+### Tool Support
 
 Ruby tool developers can support dotopts out-of-the-box simple by running
 `require 'dotopts'` in their program before parsing the commandline. DotOpts
@@ -125,6 +125,15 @@ option parser.
 
 
 ## Development
+
+### Suggestions & Contributions
+
+DotOpts is a brand new application, and still rather wet behind the years, so to
+speak. So your input is critical to making it better. Any and all suggestions and
+contributions are much appreciated. If you have any ideas on how to improve DotOpts,
+or find any flaws in its design that need address, please drop a comment on the
+[Issues](http://github.com/rubyworks/dotopts/issues) page. Or even better, be proactive!
+Fork the project submit a pull request. Thanks.
 
 ### Universal Solution?
 
