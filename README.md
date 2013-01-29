@@ -30,17 +30,23 @@ arguments when a matching command is invoked.
 
 ## Install
 
-DotOpts can be install via Rubygems:
+DotOpts can be install via RubyGems:
 
     gem install dotopts
 
-If you would like to use DotOpts with all Ruby tools, regardless of
-whether they have built-in support for DotOpts, then add `-rdotopts`
-to you `RUBYOPT` environment variable.
+There are two wasy to setup DotOpts for use by all Ruby tools (regardless
+of whether they have built-in support for DotOpts or not). The most
+univeral approach is to add `-rdotopts` to you `RUBYOPT` environment
+variable.
 
     export RUBYOPT="-rdotopts"
 
-This ensures DotOpts is required whenever Ruby is used.
+This ensures DotOpts is required whenever Ruby is used. The other
+approach is to use Bundler by adding DotOpts to your project's Gemfile.
+
+    gem 'dotopts'
+
+This will allow dotopts to run whenever using `bundle exec`.
 
 
 ## Usage

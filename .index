@@ -49,7 +49,7 @@ paths:
 created: '2013-01-23'
 summary: Automatic Arguments for Ruby
 title: DotOpts
-version: 0.1.1
+version: 0.1.3
 name: dotopts
 description: DotOpts is an automatic commandline argument augmenter for Ruby tools.
 date: '2013-01-29'
