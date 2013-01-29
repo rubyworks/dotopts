@@ -13,9 +13,14 @@ module DotOpts
   def self.configure!(file=nil)
     file = options_file unless file
     if file
-      text = File.read(file)
+      text   = File.read(file)
       parser = Parser.parse(text)
-      ARGV.concat parser.arguments
+
+      argv = parser.arguments
+      env  = parser.environment
+
+      debug(file, argv, env)
+      apply(argv, env)
     end
   end
 
@@ -42,6 +47,33 @@ module DotOpts
       dir = File.dirname(dir)
     end
     nil
+  end
+
+  # Apply arguments and environment options.
+  #
+  # TODO: Support argument prepending in future version?
+  #
+  def self.apply(argv, env={})
+    env.each{ |k,v|  ENV[k.to_s] = v.to_s }
+    ARGV.concat(argv)
+  end
+
+  # Print message to stderr if dopts_debug flag it set.
+  #
+  def self.debug(file, argv, env)
+    return unless ENV['dotopts_debug'] 
+
+    $stderr.puts "dotopts file: #{file}"
+
+    unless argv.empty?
+      msg = argv.join(' ')
+      $stderr.puts "dotopts argv: " + msg
+    end
+
+    unless env.empty?
+      msg = env.map{ |k,v| "#{k}=#{v.inspect}" }.join(' ')
+      $stderr.puts "dotopts env: " + msg
+    end
   end
 
 end

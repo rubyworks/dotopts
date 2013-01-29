@@ -23,6 +23,7 @@ module DotOpts
     def initialize(text)
       @text = text
       @arguments = []
+      @environment = {}
     end
 
     #
@@ -30,6 +31,9 @@ module DotOpts
 
     #
     attr :arguments
+
+    #
+    attr :environment
 
     #
     def parse
