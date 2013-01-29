@@ -35,7 +35,7 @@ DotOpts can be install via Rubygems:
     gem install dotopts
 
 If you would like to use DotOpts with all Ruby tools, regardless of
-wether they have built-in support for DotOpts, then add `-rdotopts`
+whether they have built-in support for DotOpts, then add `-rdotopts`
 to you `RUBYOPT` environment variable.
 
     export RUBYOPT="-rdotopts"
