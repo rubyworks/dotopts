@@ -1,5 +1,5 @@
-[![Build Status](https://secure.travis-ci.org/rubyworks/dotopts.png)](http://travis-ci.org/rubyworks/dotopts)
 [![Gem Version](https://badge.fury.io/rb/dotopts.png)](http://badge.fury.io/rb/dotopts)
+[![Build Status](https://secure.travis-ci.org/rubyworks/dotopts.png)](http://travis-ci.org/rubyworks/dotopts)
 
 <br/>
 
@@ -119,8 +119,8 @@ using regular expressions.
 ## Third Party Support
 
 Ruby tool developers can support dotopts out-of-the-box simple by running
-`require 'dotopt'` in their program before parsing the commandline. DotOpts
-simply inject arguments into `ARGV` so it can work with any commandline
+`require 'dotopts'` in their program before parsing the commandline. DotOpts
+simply injects arguments into `ARGV` so it can work with any commandline
 option parser.
 
 
