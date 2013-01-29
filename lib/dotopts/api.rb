@@ -5,8 +5,13 @@ module DotOpts
   CONFIG_FILE = '.options'
 
   # Configure
-  def self.configure!(config_file)
-    if config_file = config_file || config_file()
+  #
+  # @param [String] configuraiton file
+  #
+  # @return nothing
+  def self.configure!(file=nil)
+    file = config_file unless file
+    if file
       text = File.read(config_file)
       parser = Parser.parse(text)
       ARGV.concat parser.arguments
