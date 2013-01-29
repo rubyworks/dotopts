@@ -5,7 +5,7 @@
 
 # DotOpts
 
-**Universal Command Options Configuration (for Ruby Executables)**
+**Automated Commandline Options (for Ruby Executables)**
 
 [Website](http://rubyworks.github.com/dotopts) /
 [Report Issue](http://github.com/rubyworks/dotopts/issues) /
@@ -14,9 +14,9 @@
 
 ## About
 
-DotOpts is an automatic command line argument augmenter. I looks for a local
-local `.opts` configuration file and applies the appropriate arguments
-when a matching command is invoked.
+DotOpts is an automatic commandline argument augmenter. It looks for a
+project's local `.opts` configuration file and applies the appropriate
+arguments when a matching command is invoked.
 
 
 ## Features
@@ -129,7 +129,7 @@ option parser.
 ### Universal Solution?
 
 It would be awesome if it were possible to have DotOpts apply to *all* executables,
-not just Ruby-based executables. But I do not know of such a solution for Bash, Zsh
+not just Ruby-based executables. But I do not know how this can be done for Bash, Zsh
 or any other shell. Of course, each scripting language could potentially have
 its own implementation of DotOpts, which would cover many more executables, but it
 would still not cover all of them.
