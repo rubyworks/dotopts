@@ -3,8 +3,9 @@
 ## 0.1.3 / 2013-01-30
 
 Environment settings were not being applied. This release improves the code
-that handles application of options and fix the environment setting issue.
-This release also adds a debug log option, so one can see what DotOpts is doing.
+that handles application of options and fixes the environment setting issue.
+This release also adds a debug log option, so one can see what DotOpts is doing
+by setting `dotopts_debug`.
 
 Changes:
 
