@@ -1,16 +1,12 @@
-[![Gem Version](https://badge.fury.io/rb/dotopts.png)](http://badge.fury.io/rb/dotopts)
-[![Build Status](https://secure.travis-ci.org/rubyworks/dotopts.png)](http://travis-ci.org/rubyworks/dotopts)
-
-<br/>
-
 # DotOpts
 
 **Automated Commandline Options (for Ruby Executables)**
 
 [Website](http://rubyworks.github.com/dotopts) /
 [Report Issue](http://github.com/rubyworks/dotopts/issues) /
-[Source Code](http://github.com/rubyworks/dotopts)
-
+[Source Code](http://github.com/rubyworks/dotopts) /
+[![Build Status](https://secure.travis-ci.org/rubyworks/dotopts.png)](http://travis-ci.org/rubyworks/dotopts) /
+[![Gem Version](https://badge.fury.io/rb/dotopts.png)](http://badge.fury.io/rb/dotopts)
 
 ## About
 
