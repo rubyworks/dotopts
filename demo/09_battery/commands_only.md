@@ -2,7 +2,7 @@
 
 ## Most basic example
 
-Given an .opts file:
+Given an `.option` file:
 
     yard
       --title "Big Title"
@@ -14,7 +14,7 @@ When we run `yard`, we should get the arguments:
 
 ## Example with later matching commande
 
-Given an .opts file with a number of profiles:
+Given an .option file with a number of profiles:
 
     something
       --title "Little Title"
@@ -29,7 +29,7 @@ When we run `yard` we should get the arguments:
 
 ## Example with multiple matching commands
 
-Given an .opts file with a number of commands:
+Given an .option file with a number of commands:
 
     yard
       --title "First Title"

@@ -1,4 +1,4 @@
-When 'Given an .opts file' do |text|
+When 'Given an `.option` file' do |text|
   ENV.replace({})
   ARGV.replace([])
 

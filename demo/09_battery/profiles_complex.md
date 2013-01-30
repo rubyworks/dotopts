@@ -2,7 +2,7 @@
 
 ## Basic environment profile
 
-Given an .opts file:
+Given an .option file:
 
     [a=1]
     yard
@@ -15,7 +15,7 @@ When we run `a=1 yard`, we should get the arguments:
 
 ## Multi-matching profile
 
-Given an .opts file:
+Given an .option file:
 
     [a=1 b=2]
     yard
@@ -28,7 +28,7 @@ When we run `a=1 b=2 yard`, we should get the arguments:
 
 ## Multiple multi-matching profiles
 
-Given an .opts file:
+Given an .option file:
 
     [a=1 b=1]
     yard
@@ -45,7 +45,7 @@ When we run `a=1 b=3 yard`, we should get the arguments:
 
 ## Multiple matching multi-matching profiles
 
-Given an .opts file:
+Given an .option file:
 
     [a=1 b=1]
     yard

@@ -2,7 +2,7 @@
 
 ## Most basic example
 
-Given an .opts file:
+Given an .option file:
 
     yard
       --title $title
@@ -14,7 +14,7 @@ When we run `title=Title yard`, we should get the arguments:
 
 ## Environment profile substitutions
 
-Given an .opts file:
+Given an .option file:
 
     [a=$b]
     yard
