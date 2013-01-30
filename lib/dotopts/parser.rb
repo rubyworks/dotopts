@@ -3,39 +3,44 @@ module DotOpts
   class Parser
     require 'shellwords'
 
-    #
+    # Regular expression to match profile headers.
     RE_PROFILE_HEADER = /^\[/
 
-    #
+    # Regular expression to match command headers.
     RE_COMMAND_HEADER = /^\w/
 
-    #
+    # Regular expression to match blank strings.
     RE_BLANK_STRING = /^\s*$/
 
+    # Convenience constructor for `new(text).parse`.
     #
+    # @return [Parser]
     def self.parse(text)
       parser = new(text)
       parser.parse
       parser
     end
 
+    # Initialize new instance.
+    #
+    # @param [#to_s] text
     #
     def initialize(text)
-      @text = text
+      @text = text.to_s
       @arguments = []
       @environment = {}
     end
 
-    #
+    # The configuration document text.
     attr :text
 
-    #
+    # The applicable arguments parsed from the config text.
     attr :arguments
 
-    #
+    # The applicable environment parsed from the config text.
     attr :environment
 
-    #
+    # Parse the configuration text.
     def parse
       lines = @text.lines.to_a
 
@@ -54,7 +59,7 @@ module DotOpts
       parse_profiles(lines)
     end
 
-    #
+    # Parse profiles.
     def parse_profiles(lines)
       until lines.empty?
         line = lines.first.rstrip
@@ -87,7 +92,7 @@ module DotOpts
       end
     end
 
-    #
+    # Parse commands.
     def parse_commands(lines)
       while line = lines.first
         line = line.strip
@@ -106,7 +111,7 @@ module DotOpts
       end
     end
 
-    #
+    # Parse environment.
     def parse_environment(lines)
       while line = lines.first
         line = line.strip
@@ -121,7 +126,7 @@ module DotOpts
       end
     end
 
-    #
+    # Parse arguments.
     def parse_arguments(lines)
       while line = lines.first
         line = line.rstrip
@@ -134,9 +139,10 @@ module DotOpts
       end
     end
 
+    # The current command comes from the basename of `$0`.
+    # But it can be overriddne by setting the `cmd` environment variable.
     #
-    # @todo Note sure the cmd environment variable override is a good idea.
-    #
+    # @return [String]
     def current_command
       ENV['cmd'] || File.basename($0)
     end
@@ -148,12 +154,18 @@ module DotOpts
       value.gsub(/\$(\w+)/){ |m| ENV[$1] }
     end
 
+    # Split a string up into shellwords.
     #
+    # @return [Array]
     def shellwords(value)
       Shellwords.shellwords(value)
     end
 
+    # Remove intialize blank lines for an array of strings.
     #
+    # @param [Array<String>] lines
+    #
+    # @return [Array<String>]
     def remove_initial_blank_lines(lines)
       lines.shift while RE_BLANK_STRING =~ lines.first
     end

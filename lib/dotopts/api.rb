@@ -1,7 +1,7 @@
 module DotOpts
   require 'dotopts/parser'
 
-  #
+  # Configuration file name.
   OPTIONS_FILE = '.option'
 
   # Configure
@@ -53,6 +53,7 @@ module DotOpts
   #
   # TODO: Support argument prepending in future version?
   #
+  # @return nothing
   def self.apply(argv, env={})
     env.each{ |k,v|  ENV[k.to_s] = v.to_s }
     ARGV.concat(argv)
@@ -60,6 +61,7 @@ module DotOpts
 
   # Print message to stderr if dopts_debug flag it set.
   #
+  # @return nothing
   def self.debug(file, argv, env)
     return unless ENV['dotopts_debug'] 
 
