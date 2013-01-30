@@ -11,7 +11,7 @@
 ## About
 
 DotOpts is an automatic commandline argument augmenter. It looks for a
-project's local `.opts` configuration file and applies the appropriate
+project's local `.option` configuration file and applies the appropriate
 arguments when a matching command is invoked.
 
 
@@ -49,7 +49,7 @@ This will allow dotopts to run whenever using `bundle exec`.
 
 ### Setting Arguments
 
-A simple example of a projects `.opts` file:
+A simple example of a projects `.option` file:
 
     yardoc
     yard doc
@@ -76,7 +76,7 @@ as a variable substitution.
 
 ### Conditional Profiles
 
-The `.opts` configuration file support profiles via the square brackets.
+The `.option` configuration file support profiles via the square brackets.
 Profiles are chosen via the `$profile` or `$p` environment variable.
 
 ```
