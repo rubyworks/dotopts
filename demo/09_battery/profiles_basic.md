@@ -2,7 +2,7 @@
 
 ## Basic example with multiple profiles
 
-Given an .option file:
+Given a `.option` file:
 
     yard
       --title "Cool Title"
@@ -18,7 +18,7 @@ When we run `yard`, we should get the arguments:
 
 ## Example with single profile
 
-Given an .option file with a leading profile:
+Given a `.option` file with a leading profile:
 
     [example]
     yard
@@ -31,7 +31,7 @@ When we run `p=example yard`, we should get the arguments:
 
 ## Example with later matching profile
 
-Given an .option file with a number of profiles:
+Given a `.option` file with a number of profiles:
 
     [something]
     yard
@@ -48,7 +48,7 @@ When we run `p=example yard` we should get the arguments:
 
 ## Example with multiple matching profiles
 
-Given an .option file with a number of profiles:
+Given a `.option` file with a number of profiles:
 
     [example]
     yard

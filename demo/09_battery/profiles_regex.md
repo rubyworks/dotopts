@@ -2,7 +2,7 @@
 
 ## Basic profile regex
 
-Given an .option file:
+Given a `.option` file:
 
     [~"q(x)?"]
     yard
@@ -20,7 +20,7 @@ And when we run `p=qx yard`, we should get the arguments:
 
 ## Basic environment profile regex
 
-Given an .option file:
+Given a `.option` file:
 
     [a=~"x|y"]
     yard
@@ -38,7 +38,7 @@ And when we run `a=y yard`, we should get the arguments:
 
 ## Complex profile
 
-Given an .option file:
+Given a `.option` file:
 
     [~"q(x)?" a=~"x|y"]
     yard
