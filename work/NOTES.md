@@ -88,41 +88,6 @@ manipulation just be adding a named section and a bit of special notation.
     --private ? --foo : --bar
 ```
 
-Another thought, we could turn the thing inside out if we wanted, but that's
-probably worse:
-
-```
-ENVIRONMENT
-  yardoc
-  yard doc
-    foo=100
-
-DEFAULT
-  yardoc
-  yard doc
-    lib
-    -
-    *.md
-    *.txt
-
-PREPEND
-  yardoc
-  yard doc
-    --output-dir doc
-
-APPEND
-  yardoc
-  yard doc
-    --readme README.md
-    --title DotOpts
-    --protected
-
-REMOVE
-  yardoc
-  yard doc
-    --private ?
-```
-
 My only other thought at this point, is perhaps something more sed would be
 useful. Sigh, I guess I really am getting the point of having to implement
 a mini-programming language just for manipulaing argument lists.
@@ -130,14 +95,18 @@ a mini-programming language just for manipulaing argument lists.
 ```
 yardoc
 yard doc
-  env(foo=100)
-  default(lib - *.md *.txt)
-  prepend(--output-dir doc)
-  append(--readme README.md --title DotOpts --protected)
-  remove(--private)
-  if(--private) {
-    remove(--private)
-    prepend(--public)
-  }
+  environment:
+    foo: 100
+  default: lib - *.md *.txt
+  prepend: --output-dir doc
+  append: --readme README.md --title DotOpts --protected
+  remove: --private
+  if:
+    contains: --private
+    then:
+      remove: --private
+      prepend: --public
 ```
+
+Complex conditions are a little tricky though.
 
