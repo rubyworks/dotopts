@@ -77,10 +77,19 @@ yard doc
 ```
 
 I was hoping to avoid that, but it looks like we are going to ultimately
-need this level of flexibility, and unless there some other genius notation
-then this seems the clearest approach.
+need this level of flexibility, and unless there is some other genius notation
+then this seems the clearest approach. It easily allows for other forms of
+manipulation just be adding a named section and a bit of special notation.
 
-We could turn the thing inside out if we wanted, but that's probably worse:
+```
+  REPLACE
+    --private | --public
+  APPEND_IF
+    --private ? --foo : --bar
+```
+
+Another thought, we could turn the thing inside out if we wanted, but that's
+probably worse:
 
 ```
 ENVIRONMENT
@@ -114,6 +123,21 @@ REMOVE
     --private ?
 ```
 
-My only other thought at this point, is perhaps a tool like sed would be useful
-here.
+My only other thought at this point, is perhaps something more sed would be
+useful. Sigh, I guess I really am getting the point of having to implement
+a mini-programming language just for manipulaing argument lists.
+
+```
+yardoc
+yard doc
+  env(foo=100)
+  default(lib - *.md *.txt)
+  prepend(--output-dir doc)
+  append(--readme README.md --title DotOpts --protected)
+  remove(--private)
+  if(--private) {
+    remove(--private)
+    prepend(--public)
+  }
+```
 
