@@ -1,5 +1,5 @@
 ---
-script: "bundle exec qed"
+script: "bundle exec rubytest -Ilib spec/spec_*.rb"
 rvm:
   - 1.9.2
   - 1.9.3
