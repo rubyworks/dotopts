@@ -5,7 +5,16 @@ end
 require 'spectroscope'
 require 'ae'
 
-require 'dotopts/api'
+if ENV['cov']
+  require 'simplecov'
+  SimpleCov.command_name File.basename($0)
+  SimpleCov.start do
+    add_filter "spec/"
+    coverage_dir 'log/coverage'
+  end
+end
+
+p require 'dotopts/api'
 
 module Kernel
 

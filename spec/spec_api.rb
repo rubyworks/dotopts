@@ -4,7 +4,7 @@ describe DotOpts do
 
   it "can configure!" do
     ARGV.replace([])
-    ENV['cmd'] = 'yard'  # FIXME: try `foo` and watch what happens
+    ENV['cmd'] = 'yard'
 
     example_avex_file = File.dirname(__FILE__) + '/fixtures/yard.opts'
 
