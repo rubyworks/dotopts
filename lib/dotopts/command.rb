@@ -1,13 +1,31 @@
 module DotOpts
 
-  # TODO: is ENV['cmd'] okay? Maybe ['dotopts_command'] would be better?
+  # Get the current command.
+  #
+  # @note This is take from basename of `$0`. In the future, we may
+  #       need to find a way to tweak this to somehow include parrent
+  #       directories.
+  #
+  # @todo Is ENV['cmd'] okay? Maybe ['dotopts_command'] would be better?
   def self.command
     ENV['cmd'] || File.basename($0)
   end
 
+  ##
+  # Command class encapsulate a configuration for a given command and
+  # a given profile.
   #
   class Command
+
+    # Initialize new instance of Command.
     #
+    # @param [String] name
+    #   The name of the command. Can include subcommand, e.g. `yard doc`.
+    #
+    # @option settings [String,nil] :profile
+    #   The profile for which this command configuation would be applicable.
+    #
+    # @return [void]
     def initialize(name, settings={})
       @name = name
 
@@ -20,22 +38,33 @@ module DotOpts
     # Command name. [String]
     attr :name
 
+    # Profile designation.
     #
+    # @return [String,nil]
     def profile
       @profile
     end
 
+    # Set profile designation.
     #
+    # @param [String,nil] 
+    #   The profile designation.
+    #
+    # @return [String,nil]
     def profile=(profile)
       @profile = profile ? profile.to_str : nil  #? shellwords(profile).first : nil
     end
 
+    # Environment settings.
     #
+    # @return [Hash]
     def environment
       @environment
     end
 
+    # Arguments.
     #
+    # @return [Array]
     def arguments
       @arguments
     end
@@ -61,12 +90,16 @@ module DotOpts
       end
     end
 
+    # Is the command applicable to the current command line?
     #
+    # @return [Boolean]
     def current?
       command? && profile?
     end
 
     # Does the command's name match the current command?
+    #
+    # @return [Boolean]
     def command?
       this = @name.split(' ')
       real = [DotOpts.command, *ARGV][0,this.size]
@@ -74,6 +107,8 @@ module DotOpts
     end
 
     # Does the command's profile match the current environment?
+    #
+    # @return [Boolean]
     def profile?
       case profile = profile()
       when /^\~/
