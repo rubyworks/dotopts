@@ -1,0 +1,21 @@
+#!mast .index .ruby .test .yaropts bin demo lib man spec test *.md *.txt
+.index
+demo/09_battery/commands_only.md
+demo/09_battery/profiles_basic.md
+demo/09_battery/profiles_complex.md
+demo/09_battery/profiles_regex.md
+demo/09_battery/substitution.md
+demo/applique/battery.rb
+demo/applique/require.rb
+lib/dotopts/api.rb
+lib/dotopts/command.rb
+lib/dotopts/parser.rb
+lib/dotopts.rb
+spec/fixtures/yard.opts
+spec/helper.rb
+spec/spec_api.rb
+spec/spec_command.rb
+spec/spec_parser.rb
+HISTORY.md
+README.md
+LICENSE.txt
