@@ -37,8 +37,10 @@ module DotOpts
   # @return [String] The options file of the project.
   def self.options_file
     if project_root
-      file = File.join(project_root, OPTIONS_FILE)
-      return file if File.exist?(file)
+      OPTIONS_FILES.each do |optfile|
+        file = File.join(project_root, optfile)
+        return file if File.exist?(file)
+      end
     end
   end
 
@@ -50,7 +52,7 @@ module DotOpts
     home = File.expand_path('~')
     until dir == home || dir == '/'
       OPTIONS_FILES.each do |optfile|
-        if file = Dir[File.join(dir, optfile)].first
+        if File.exist?(File.join(dir, optfile))
           return dir
         end
       end
