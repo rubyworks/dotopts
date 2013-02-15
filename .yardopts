@@ -1,0 +1,10 @@
+--title DotOpts
+--readme README.md
+--output-dir doc
+--protected
+--private
+lib
+-
+*.md
+*.txt
+
