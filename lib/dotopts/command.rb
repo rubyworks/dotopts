@@ -70,7 +70,7 @@ module DotOpts
     def command?
       this = @name.split(' ')
       real = [DotOpts.command, *ARGV][0,this.size]
-      this == real
+      this == real && ARGV[this.size..-1].empty?
     end
 
     # Does the command's profile match the current environment?
