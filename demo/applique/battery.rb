@@ -15,14 +15,19 @@ When 'we run `/(.*?)/`' do |command|
   end
 
   ENV['cmd'] = args.shift
-
   ARGV.replace(args)
 
-  @opts_parser = DotOpts::Parser.parse(@opts_text)
+  DotOpts.configure!(@opts_text)
 end
 
 When 'we should get the arguments' do |text|
+  #opts_args = []
+  #@opts_cmds.each do |c|
+  #  next unless c.current?
+  #  opts_args += c.arguments
+  #end
+
   args = text.split("\n").map{ |x| x.strip }
-  args.assert == @opts_parser.arguments
+  args.assert == ARGV #opts_args
 end
 

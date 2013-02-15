@@ -8,7 +8,7 @@ describe DotOpts do
 
     example_avex_file = File.dirname(__FILE__) + '/fixtures/yard.opts'
 
-    DotOpts.configure!(example_avex_file)
+    DotOpts.configure!(File.new(example_avex_file))
 
     ARGV[-2].assert == '--title'
     ARGV[-1].assert == 'Big Title'
@@ -20,7 +20,7 @@ describe DotOpts do
 
     example_avex_file = File.dirname(__FILE__) + '/fixtures/yard.opts'
 
-    DotOpts.configure!(example_avex_file)
+    DotOpts.configure!(File.new(example_avex_file))
 
     ARGV[-1].assert == '--private'
   end

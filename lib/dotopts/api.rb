@@ -12,11 +12,10 @@ module DotOpts
   #   The configuration file to load. (optional)
   #
   # @return [void]
-  def self.configure!(file=nil)
-    file = options_file unless file
+  def self.configure!(io=nil)
+    text, file = read_config(io)
 
-    if file
-      text = File.read(file)
+    if text
       cmds = Parser.parse(text)
 
       applicable = cmds.select do |c|
@@ -65,8 +64,8 @@ module DotOpts
   # @return [void]
   def self.apply(argv, env={})
     env.each{ |k,v| ENV[k.to_s] = v.to_s }
-    #ARGV.concat(argv)
-    ARGV.replace(argv + ARGV)
+    ARGV.concat(argv)
+    #ARGV.replace(argv + ARGV)
   end
 
   # Print message to stderr if dopts_debug flag it set.
@@ -86,6 +85,31 @@ module DotOpts
       msg = env.map{ |k,v| "#{k}=#{v.inspect}" }.join(' ')
       $stderr.puts "dotopts env: " + msg
     end
+  end
+
+  # Take an IO object and read it in. If it is a File
+  # object also return the file name. Strings are passed
+  # through untouched.
+  #
+  # @return [Array<String>]
+  def self.read_config(io)
+    text, file = nil, '(io)'
+
+    case io
+    when String
+      text = io
+    when File
+      text = io.read
+      file = io.path
+    when nil
+      if file = options_file
+        text = File.read(file)
+      end
+    else
+      text = io.read
+    end
+
+    return text, file
   end
 
 end

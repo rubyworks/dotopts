@@ -110,19 +110,21 @@ module DotOpts
     #
     # @return [Boolean]
     def profile?
-      case profile = profile()
-      when /^\~/
-        true if Regexp.new(profile.sub('~','')) === (ENV['profile'] || ENV['p']).to_s
-      when /=~/
-        name, value = profile.split('=~')
-        #name = 'profile' if name.empty?
-        true if Regexp.new(value) === ENV[name]
-      when /=/
-        name, value = profile.split('=')
-        #name = 'profile' if name.empty?
-        true if subenv(value) == ENV[name]
-      else
-        true if profile.to_s == (ENV['profile'] || ENV['p']).to_s
+      shellwords(profile || "").all? do |sw|
+        case sw
+        when /^\~/
+          true if Regexp.new(sw.sub('~','')) === (ENV['profile'] || ENV['p']).to_s
+        when /=~/
+          name, value = sw.split('=~')
+          #name = 'profile' if name.empty?
+          true if Regexp.new(value) === ENV[name]
+        when /=/
+          name, value = sw.split('=')
+          #name = 'profile' if name.empty?
+          true if subenv(value) == ENV[name]
+        else
+          true if sw.to_s == (ENV['profile'] || ENV['p']).to_s
+        end
       end
     end
 
