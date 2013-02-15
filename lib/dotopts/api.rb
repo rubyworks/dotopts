@@ -51,8 +51,9 @@ module DotOpts
     home = File.expand_path('~')
     until dir == home || dir == '/'
       OPTIONS_FILES.each do |optfile|
-      if file = Dir[File.join(dir, optfile)].first
-        return dir
+        if file = Dir[File.join(dir, optfile)].first
+          return dir
+        end
       end
       dir = File.dirname(dir)
     end
