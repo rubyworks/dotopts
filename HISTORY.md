@@ -1,5 +1,22 @@
 # RELEASE HISTORY
 
+## 0.2.0 / 2013-02-15
+
+Rethought overall design and reimplemented parser. The syntax of option
+files is essentially the same, but now arguments are only applied if
+there are no arguments provided on the command line. In other words,
+it is assumed that if the user supplies their own arguments, then
+they don't require any from DotOpts. This redesign prevents a lot of
+potential headaches with how prepended/append options can interact 
+with options proved by the end user. In the future, we might adds some
+additional flexibility, of argument substitutions.
+
+Changes:
+
+* Rethink when arguments are applied.
+* Reimplement parser.
+
+
 ## 0.1.3 / 2013-01-30
 
 Environment settings were not being applied. This release improves the code
