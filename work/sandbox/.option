@@ -1,0 +1,3 @@
+yard doc
+  -p hero
+  ex.rb

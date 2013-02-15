@@ -2,7 +2,7 @@ module DotOpts
   require 'dotopts/parser'
 
   # Configuration file name.
-  OPTIONS_FILE = '.option'
+  OPTIONS_FILE = '.opts'
 
   # Configure
   #
@@ -12,15 +12,22 @@ module DotOpts
   # @return nothing
   def self.configure!(file=nil)
     file = options_file unless file
+
     if file
-      text   = File.read(file)
-      parser = Parser.parse(text)
+      text = File.read(file)
+      cmds = Parser.parse(text)
 
-      argv = parser.arguments
-      env  = parser.environment
+      applicable = cmds.select do |c|
+        c.current?
+      end
 
-      debug(file, argv, env)
-      apply(argv, env)
+      applicable.each do |c|
+        argv = c.arguments
+        env  = c.environment
+
+        debug(file, argv, env)
+        apply(argv, env)
+      end
     end
   end
 
@@ -41,7 +48,7 @@ module DotOpts
     dir  = start_dir
     home = File.expand_path('~')
     until dir == home || dir == '/'
-      if file = Dir[File.join(dir, '{.ruby,.git,.hg}')].first
+      if file = Dir[File.join(dir, OPTIONS_FILE)].first
         return dir
       end
       dir = File.dirname(dir)
@@ -51,12 +58,11 @@ module DotOpts
 
   # Apply arguments and environment options.
   #
-  # TODO: Support argument prepending in future version?
-  #
   # @return nothing
   def self.apply(argv, env={})
-    env.each{ |k,v|  ENV[k.to_s] = v.to_s }
-    ARGV.concat(argv)
+    env.each{ |k,v| ENV[k.to_s] = v.to_s }
+    #ARGV.concat(argv)
+    ARGV.replace(argv + ARGV)
   end
 
   # Print message to stderr if dopts_debug flag it set.

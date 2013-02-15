@@ -1,3 +1,7 @@
+if ENV['RUBYOPT'].to_s.include?('-rdotopts')
+  abort "Remove `-rdotopts` from RUBYOPT environment first."
+end
+
 require 'spectroscope'
 require 'ae'
 

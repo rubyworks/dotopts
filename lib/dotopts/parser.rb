@@ -2,15 +2,22 @@ module DotOpts
 
   class Parser
     require 'shellwords'
+    require_relative 'command'
 
     # Regular expression to match profile headers.
-    RE_PROFILE_HEADER = /^\[/
+    RE_PROFILE = /^\[(.*)\]/
 
     # Regular expression to match command headers.
-    RE_COMMAND_HEADER = /^\w/
+    RE_COMMAND = /^\w/
+
+    # Regular expression to match arguments.
+    RE_ARGUMENT = /^\s+\S+/
+
+    # Regular expression to match environment setting.
+    RE_ENVIRONMENT = /^\s+\$/
 
     # Regular expression to match blank strings.
-    RE_BLANK_STRING = /^\s*$/
+    RE_BLANK = /^\s*$/
 
     # Convenience constructor for `new(text).parse`.
     #
@@ -18,7 +25,7 @@ module DotOpts
     def self.parse(text)
       parser = new(text)
       parser.parse
-      parser
+      parser.commands
     end
 
     # Initialize new instance.
@@ -27,43 +34,120 @@ module DotOpts
     #
     def initialize(text)
       @text = text.to_s
-      @arguments = []
-      @environment = {}
+
+      #
+      @commands = []
+
+      # Holds the current commands being parsed.
+      @_commands = []
+      @_profiles = []
     end
 
-    # The configuration document text.
+    #
+    attr :commands
+
+    # The configuration document text. [String]
     attr :text
 
-    # The applicable arguments parsed from the config text.
-    attr :arguments
-
-    # The applicable environment parsed from the config text.
-    attr :environment
-
     # Parse the configuration text.
+    #
+    #
     def parse
       lines = @text.lines.to_a
 
-      remove_initial_blank_lines(lines)
+      remove_blanks(lines)
 
       # put initial non-profiled settings last 
-      if lines.first !~ RE_PROFILE_HEADER
-        index = lines.index{ |line| line =~ RE_PROFILE_HEADER }
-        if index
-          lines = lines[index..-1] + ['[]'] + lines[0...index]
-        else
-          lines = ['[]'] + lines
-        end
-      end
+      #if lines.first !~ RE_PROFILE
+      #  index = lines.index{ |line| line =~ RE_PROFILE }
+      #  if index
+      #    lines = lines[index..-1] + ['[]'] + lines[0...index]
+      #  else
+      #    #lines = ['[]'] + lines
+      #  end
+      #end
 
       parse_profiles(lines)
     end
 
+    #
+    #
+    #
+    def parse_profiles(lines)
+      @_profiles = []
+      until lines.empty?
+        line = lines.first.rstrip
+        case line
+        when RE_BLANK
+          lines.shift
+        when RE_PROFILE
+          @_profiles << $1
+          lines.shift
+        else
+          #@_commands = []
+          parse_command(lines)
+        end
+      end
+    end
+
+    # Parse lines from command onward until another profile
+    # or end of document is reached.
+    #
+    # @return [void]
+    def parse_command(lines)
+      previous = nil
+      while line = lines.first
+        case line
+        when RE_BLANK
+        when RE_COMMAND
+          if previous != :command
+            @commands.concat @_commands
+            @_commands = []
+          end
+          if @_profiles.empty?
+            @_commands << Command.new(line.strip, :profile=>nil)
+          else
+            @_profiles.each do |profile|
+              @_commands << Command.new(line.strip, :profile=>profile)
+            end
+          end
+          previous = :command
+        when RE_ARGUMENT, RE_ENVIRONMENT
+          if @_commands.empty?
+            raise SyntaxError, "no command before arguments\n@ #{line}"
+          end
+          @_commands.each{ |c| c << line }
+          previous = :argument
+        when RE_PROFILE
+          @commands.concat @_commands
+          @_commands = []
+          @_profiles = []
+          return
+        end
+        lines.shift
+      end
+      @commands.concat @_commands
+    end
+
+    # Remove intialize blank lines for an array of strings.
+    #
+    # @param [Array<String>] lines
+    #
+    # @return [Array<String>]
+    def remove_blanks(lines)
+      lines.shift while RE_BLANK =~ lines.first
+    end
+
+  end
+
+end
+
+=begin
     # Parse profiles.
     def parse_profiles(lines)
       until lines.empty?
         line = lines.first.rstrip
-        if md = RE_PROFILE_HEADER.match(line)
+        if md = RE_PROFILE_HEADER.match(line)  # TODO: this is a bit wanky
           profile = md.post_match.chomp(']')
           matches = shellwords(profile).all? do |shellword|
             case shellword
@@ -146,30 +230,8 @@ module DotOpts
     def current_command
       ENV['cmd'] || File.basename($0)
     end
-
-    # Substitute environment variables.
-    #
-    # @return [String]
-    def subenv(value)
-      value.gsub(/\$(\w+)/){ |m| ENV[$1] }
-    end
-
-    # Split a string up into shellwords.
-    #
-    # @return [Array]
-    def shellwords(value)
-      Shellwords.shellwords(value)
-    end
-
-    # Remove intialize blank lines for an array of strings.
-    #
-    # @param [Array<String>] lines
-    #
-    # @return [Array<String>]
-    def remove_initial_blank_lines(lines)
-      lines.shift while RE_BLANK_STRING =~ lines.first
-    end
-
   end
 
 end
+
+=end
