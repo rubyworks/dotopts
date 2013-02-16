@@ -1,6 +1,6 @@
 # RELEASE HISTORY
 
-## 0.2.0 / 2013-02-15
+## 0.2.0 / 2013-02-16
 
 Rethought overall design and reimplemented parser. The syntax of option
 files is essentially the same, but now arguments are only applied if

@@ -52,4 +52,4 @@ title: DotOpts
 version: 0.2.0
 name: dotopts
 description: DotOpts is an automatic commandline argument augmenter for Ruby tools.
-date: '2013-02-15'
+date: '2013-02-16'
